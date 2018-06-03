@@ -1,12 +1,11 @@
 # Android-Fragment-Handler
 
 ```
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
-
 
 
 import bd.com.cmed.cmedhealthandroiddevices.R;
@@ -17,12 +16,9 @@ public class FragmentHandler {
      * @param fragment
      */
     public static void loadFragment(Fragment fragment, Context context) {
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager=activity.getFragmentManager();
-        // clear back stack
-        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
-            fragmentManager.popBackStack();
-        }
+        popChildFragment(context);
+
+        FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
         FragmentTransaction t = fragmentManager.beginTransaction();
         t.replace(R.id.fragmentContainer,fragment);
         fragmentManager.popBackStack();
@@ -41,12 +37,9 @@ public class FragmentHandler {
      * @param fragment, tag
      */
     public static void loadFragment(Fragment fragment, String tag,Context context) {
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager=activity.getFragmentManager();
-        // clear back stack
-        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
-            fragmentManager.popBackStack();
-        }
+        popChildFragment(context);
+
+        FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
         FragmentTransaction t = fragmentManager.beginTransaction();
         t.replace(R.id.fragmentContainer, fragment, tag);
         t.addToBackStack(null);
@@ -72,8 +65,7 @@ public class FragmentHandler {
      * @param fragment
      */
     public static void loadChildFragment(Fragment fragment,Context context) {
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager=activity.getFragmentManager();
+        FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.fragmentContainer, fragment, "main")
                 .addToBackStack(null)
@@ -85,26 +77,24 @@ public class FragmentHandler {
      * @param fragment, flag
      */
     public static void loadChildFragment(Fragment fragment, boolean flag,Context context) {
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager=activity.getFragmentManager();
+        popChildFragment(context);
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        }
-
+        FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.fragmentContainer, fragment, "main")
                 .addToBackStack(null)
                 .commit();
     }
 
-    public static void popChildFragment(Fragment fragment,Context context) {
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager=activity.getFragmentManager();
+    public static void popChildFragment(Context context){
+        if (context != null){
+        FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
 
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         }
-    }
+        }
+        }
+
 }
 ```
