@@ -1,14 +1,13 @@
 # Android-Fragment-Handler
 
 ```
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
 
-
-import bd.com.cmed.cmedhealthandroiddevices.R;
+import bd.com.cmed.cmedhealthandroidv2.R;
 
 public class FragmentHandler {
     /**
@@ -86,15 +85,12 @@ public class FragmentHandler {
                 .commit();
     }
 
-    public static void popChildFragment(Context context){
-        if (context != null){
-        FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
+    public static void popChildFragment(Context context) {
+        FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
 
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         }
-        }
-        }
-
+    }
 }
 ```
